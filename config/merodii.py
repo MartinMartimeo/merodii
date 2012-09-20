@@ -27,7 +27,8 @@ external = {
 }
 
 # What URL the stream is located
-stream_url = "http://5.9.88.35:8000/nsw-anime"
+stream_url = "http://5.9.88.35:8000/"
+stream_mount = "nsw-anime"
 
 # EOF
 
