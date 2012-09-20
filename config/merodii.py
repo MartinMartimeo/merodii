@@ -22,11 +22,12 @@ exclude = ['admin']
 extra = []
 
 # Services to load: maps channel names to white or black lists
-external = { 
-   '#liberal': ['!'], # allow all
-   '#conservative': [], # allow none
+external = {
    '*': ['!'] # default whitelist, allow all
 }
+
+# What URL the stream is located
+stream_url = "http://5.9.88.35:8000/nsw-anime"
 
 # EOF
 
