@@ -15,7 +15,7 @@ exclude = ['admin']
 # If you want to enumerate a list of modules rather than disabling
 # some, use "enable = ['example']", which takes precedent over exclude
 # 
-# enable = []
+enable = ['startup', 'nsw']
 
 # Directories to load user modules from
 # e.g. /path/to/my/modules
@@ -29,6 +29,9 @@ external = {
 # What URL the stream is located
 stream_url = "http://5.9.88.35:8000/"
 stream_mount = "nsw-anime"
+
+# Messages
+msg_fliegen = "CuCu und danke fuer den Fisch"
 
 # EOF
 
