@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-nick = 'MartinsMerodiiClon'
+nick = 'MartinsMerodiiClon2'
 host = 'irc.ircplanet.eu'
-channels = ['#nsw-anime', '#nsw-anime-test']
+channels = ['#nsw-anime-test']
 owner = 'MartinMartimeo'
 
 # password is the NickServ password, serverpass is the server password

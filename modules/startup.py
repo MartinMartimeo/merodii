@@ -7,7 +7,7 @@ Licensed under the Eiffel Forum License 2.
 http://inamidst.com/phenny/
 """
 
-import threading, time
+import threading, time, sys
 
 def setup(phenny): 
    # by clsn
@@ -19,7 +19,7 @@ def setup(phenny):
       except: pass
 
       def close():
-         print "Nobody PONGed our PING, restarting"
+         print("Nobody PONGed our PING, restarting")
          phenny.handle_close()
       
       def pingloop():
@@ -58,8 +58,8 @@ def startup(phenny, input):
    if hasattr(phenny.config, 'serverpass'): 
       phenny.write(('PASS', phenny.config.serverpass))
 
-   if hasattr(phenny.config, 'password'): 
-      phenny.msg('NickServ', 'IDENTIFY %s' % phenny.config.password)
+   if hasattr(phenny.config, 'password') and phenny.config.password:
+      phenny.msg("NickServ", "IDENTIFY %s" % phenny.config.password)
       time.sleep(5)
 
    if hasattr(phenny.config, "authserv"):
@@ -75,4 +75,4 @@ startup.event = '251'
 startup.priority = 'low'
 
 if __name__ == '__main__': 
-   print __doc__.strip()
+   print(__doc__.strip())

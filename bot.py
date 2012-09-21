@@ -12,14 +12,6 @@ import irc
 
 home = os.getcwd()
 
-def decode(bytes): 
-   try: text = bytes.decode('utf-8')
-   except UnicodeDecodeError: 
-      try: text = bytes.decode('iso-8859-1')
-      except UnicodeDecodeError: 
-         text = bytes.decode('cp1252')
-   return text
-
 class Phenny(irc.Bot): 
    def __init__(self, config): 
       args = (config.nick, config.name, config.channels, config.password)
@@ -58,8 +50,8 @@ class Phenny(irc.Bot):
          # if name in sys.modules: 
          #    del sys.modules[name]
          try: module = imp.load_source(name, filename)
-         except Exception, e: 
-            print >> sys.stderr, "Error loading %s: %s (in bot.py)" % (name, e)
+         except Exception as e: 
+            print("Error loading %s: %s (in bot.py)" % (name, e), file=sys.stderr)
          else: 
             if hasattr(module, 'setup'): 
                module.setup(self)
@@ -67,14 +59,14 @@ class Phenny(irc.Bot):
             modules.append(name)
 
       if modules: 
-         print >> sys.stderr, 'Registered modules:', ', '.join(modules)
-      else: print >> sys.stderr, "Warning: Couldn't find any modules"
+         print('Registered modules:', ', '.join(modules), file=sys.stderr)
+      else: print("Warning: Couldn't find any modules", file=sys.stderr)
 
       self.bind_commands()
 
    def register(self, variables): 
       # This is used by reload.py, hence it being methodised
-      for name, obj in variables.iteritems(): 
+      for name, obj in variables.items(): 
          if hasattr(obj, 'commands') or hasattr(obj, 'rule'): 
             self.variables[name] = obj
 
@@ -82,7 +74,7 @@ class Phenny(irc.Bot):
       self.commands = {'high': {}, 'medium': {}, 'low': {}}
       
       def bind(self, priority, regexp, func): 
-         print priority, regexp.pattern.encode('utf-8'), func
+         print(priority, regexp.pattern.encode('utf-8'), func)
          # register documentation
          if not hasattr(func, 'name'): 
             func.name = func.__name__
@@ -99,7 +91,7 @@ class Phenny(irc.Bot):
          pattern = pattern.replace('$nickname', re.escape(self.nick))
          return pattern.replace('$nick', r'%s[,:] +' % re.escape(self.nick))
 
-      for name, func in self.variables.iteritems(): 
+      for name, func in self.variables.items(): 
          # print name, func
          if not hasattr(func, 'priority'): 
             func.priority = 'medium'
@@ -169,9 +161,9 @@ class Phenny(irc.Bot):
       return PhennyWrapper(self)
 
    def input(self, origin, text, bytes, match, event, args): 
-      class CommandInput(unicode): 
+      class CommandInput(str): 
          def __new__(cls, text, origin, bytes, match, event, args): 
-            s = unicode.__new__(cls, text)
+            s = str.__new__(cls, text)
             s.sender = origin.sender
             s.nick = origin.nick
             s.event = event
@@ -188,7 +180,7 @@ class Phenny(irc.Bot):
 
    def call(self, func, origin, phenny, input): 
       try: func(phenny, input)
-      except Exception, e: 
+      except Exception as e: 
          self.error(origin)
 
    def limit(self, origin, func): 
@@ -201,10 +193,10 @@ class Phenny(irc.Bot):
 
    def dispatch(self, origin, args): 
       bytes, event, args = args[0], args[1], args[2:]
-      text = decode(bytes)
+      text = "%s" % bytes
 
       for priority in ('high', 'medium', 'low'): 
-         items = self.commands[priority].items()
+         items = list(self.commands[priority].items())
          for regexp, funcs in items: 
             for func in funcs: 
                if event != func.event: continue
@@ -228,4 +220,4 @@ class Phenny(irc.Bot):
                         self.stats[(func.name, source)] = 1
 
 if __name__ == '__main__': 
-   print __doc__
+   print(__doc__)

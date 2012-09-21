@@ -8,7 +8,7 @@ __date__ = '20.09.12 - 23:03'
 
 import re
 import time
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 
 def read_icyinfo(url):
     """
@@ -16,9 +16,9 @@ def read_icyinfo(url):
     """
 
     # Init urllib
-    request = urllib2.Request(url)
+    request = urllib.request.Request(url)
     request.add_header('Icy-MetaData','1')
-    opener = urllib2.build_opener()
+    opener = urllib.request.build_opener()
 
     # Read data
     data = opener.open(request, None, 1)
@@ -28,7 +28,7 @@ def read_icyinfo(url):
 
     # Parse
     rtn = {}
-    for key, value in info.items():
+    for key, value in list(info.items()):
         if key.startswith('icy-'):
             key = key[4:]
             rtn[key] = value
@@ -38,8 +38,8 @@ def read_icyinfo(url):
 def read_xslinfo(url):
 
     # Init urllib
-    request = urllib2.Request(url)
-    opener = urllib2.build_opener()
+    request = urllib.request.Request(url)
+    opener = urllib.request.build_opener()
 
     # Regex
     regex_key = re.compile(r'<td[^>]*>(.*)<\/td>', re.U + re.I)

@@ -48,7 +48,7 @@ def zitat(phenny, input):
     """
     try:
         while True:
-            quote = subprocess.check_output(["fortune", "-s"])
+            quote = subprocess.check_output(["fortune", "-s"]).decode("utf-8")
             if quote.find("--") == -1:
                 continue
             # Extract Author
@@ -69,7 +69,7 @@ def zitat(phenny, input):
             phenny.say(str)
             break
     except subprocess.CalledProcessError:
-        print >> sys.stderr, "Please install fortune!"
+        print("Please install fortune!", file=sys.stderr)
 
 
 zitat.commands = ['zitat']
@@ -84,15 +84,15 @@ def fun(phenny, input):
     """
     nick_to = input.match.group(2)
     if nick_to:
-        nick_to = nick_to.encode("utf-8")
-    action = input.match.group(1)
+        nick_to = nick_to.strip()
+    action = input.match.group(1).strip()
     nicks = uchan(input.sender)
 
     if not nick_to:
         msg = getattr(phenny.config, "msg_%s_nobody" % action) % input.nick
     elif nick_to == phenny.nick:
         msg = getattr(phenny.config, "msg_%s_phenny" % action)
-    elif nick_to in nicks.keys() and nicks[nick_to]:
+    elif nick_to in list(nicks.keys()) and nicks[nick_to]:
         msg = getattr(phenny.config, "msg_%s_anybody" % action) % nick_to
     else:
         msg = getattr(phenny.config, "msg_%s_phenny" % action)
@@ -110,12 +110,12 @@ def hilfe(phenny, input):
         phenny.msg(input.nick, phenny.config.msg_hilfe)
         return
 
-    name = name.lower()
+    name = name.lower().strip()
 
     # Check if key present with example
     has_key = False
-    for (key, doc) in phenny.doc.items():
-        if doc[1] and isinstance(doc[1], dict) and name in doc[1].keys():
+    for (key, doc) in list(phenny.doc.items()):
+        if doc[1] and isinstance(doc[1], dict) and name in list(doc[1].keys()):
             phenny.msg(input.nick, doc[1][name])
             break
         elif doc[1] and isinstance(doc[1], list) and key == name:
@@ -137,7 +137,7 @@ def uchan(chan):
     """
     This is for holding the users in a channel
     """
-    if chan in uchan.data.keys():
+    if chan in list(uchan.data.keys()):
         return uchan.data[chan]
     uchan.data[chan] = {}
     return []
@@ -175,7 +175,7 @@ def on_nick(phenny, input):
     renames an user
     """
     nick_from = input.nick
-    nick_to = input.match.group(0)
+    nick_to = input.match.group(0).strip()
     uchan(input.sender)
     uchan.data[input.sender][nick_from] = False
     uchan.data[input.sender][nick_to] = True
@@ -196,8 +196,8 @@ def on_names(phenny, input):
     """
     list user
     """
-    nicks = input.match.group(0)
-    channel = input.args[2]
+    nicks = input.match.group(0).strip()
+    channel = input.args[2].strip()
     uchan(channel)
     for nick in nicks.split():
         uchan.data[channel][nick.strip("@%+")] = True
@@ -205,4 +205,4 @@ on_names.event = '353'
 on_names.rule = r'(.*)'
 
 if __name__ == '__main__':
-    print __doc__.strip()
+    print(__doc__.strip())
