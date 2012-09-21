@@ -85,6 +85,7 @@ def hilfe(phenny, input):
         elif doc[1] and isinstance(doc[1], list) and key == name:
             for line in doc[1]:
                 phenny.msg(input.nick, line)
+            break
         elif doc[1] and key == name:
             phenny.msg(input.nick, doc[1])
             break
