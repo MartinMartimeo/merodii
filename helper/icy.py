@@ -87,5 +87,3 @@ cached_streaminfos.last = 0
 cached_streaminfos.data = None
 cached_streaminfos.info = None
 cached_streaminfos.time = 60 # 1 minute
-
-print "%s" % cached_streaminfos("http://5.9.88.35:8000/", "playlist")

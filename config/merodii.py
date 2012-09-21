@@ -32,6 +32,9 @@ stream_mount = "nsw-anime"
 
 # Messages
 msg_fliegen = "CuCu und danke fuer den Fisch"
+msg_kekse_nobody = "bewirft %s mit Keksen."
+msg_kekse_anybody = "bewirft %s mit Keksen"
+msg_kekse_phenny = "mampft alle Kekse selber auf."
 
 # EOF
 
