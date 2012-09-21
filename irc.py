@@ -172,7 +172,9 @@ class Bot(asynchat.async_chat):
             self.sending.release()
             return
 
-      def safe(input): 
+      def safe(input):
+         if isinstance(input, str):
+             input = input.encode()
          input = input.replace(b'\n', b'')
          return input.replace(b'\r', b'')
       self.__write((b'PRIVMSG', safe(recipient)), safe(text))
