@@ -6,6 +6,7 @@
 __author__ = 'Martin Martimeo <martin@martimeo.de>'
 __date__ = '20.09.12 - 23:15'
 
+import subprocess
 import sys
 
 from helper.icy import cached_streaminfos
@@ -40,6 +41,41 @@ def regeln(phenny, input):
 regeln.commands = ['regeln']
 regeln.example = ["Regeln für den NSW-AnImE IRC-Chat:", "Begegne anderen Chattern mit Respekt und Höflichkeit.", "Halte dich an die Gesetze. Verweise auf illegale, pornografische/erotische oder gewaltverherrlichende Inhalte werden nicht toleriert. Dies betrifft auch animerelevante Verweise, d.h. Links zu Animestreams/-downloads oder auch zu deren Sub-Gruppen werden nicht geduldet. ", "Nehmt nicht alles ernst, was geschrieben wird. Habt ihr jedoch das Gefühl, dass es eine bestimmte Grenze überschreitet, wendet euch ans Team.", "Spammen/Flooding (unnötiges Wiederholen von ein und der selben Nachricht) ist zu unterlassen.", "Links sind grundsätzlich verboten. Ausnahmen sind: www.nsw-anime.de und Profile und Bilder von unserer Seite, sowie jeglicher anderer Content unserer Seite.", "Weiterhin gelten die Regeln des Chatbetreibers: http://ircplanet.eu/rules.html.de"]
 regeln.priority = 'low'
+
+def zitat(phenny, input):
+    """
+    Merodii zitiert eine Berühmte Persönlichkeit
+    """
+    try:
+        while True:
+            quote = subprocess.check_output(["fortune", "-s"])
+            if quote.find("--") == -1:
+                continue
+            # Extract Author
+            pos_author = quote.find("--") + 2
+            author = ""
+            for line in quote[pos_author:].split("\n"):
+                line = line.strip()
+                if line:
+                    author += line
+            # Extract Line
+            pos_author -= 2
+            str = ""
+            for line in quote[:pos_author].split("\n"):
+                line = line.strip()
+                if line:
+                    str += line + " "
+            str += "(" + author + ")"
+            phenny.say(str)
+            break
+    except subprocess.CalledProcessError:
+        print >> sys.stderr, "Please install fortune!"
+
+
+zitat.commands = ['zitat']
+zitat.example = "!zitat Ein Zitat einer berühtem Persöhnlichkeit"
+zitat.priority = 'low'
+
 
 def fun(phenny, input):
     """
