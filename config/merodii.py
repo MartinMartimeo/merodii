@@ -3,7 +3,7 @@
 
 nick = 'MartinsMerodiiClon'
 host = 'irc.ircplanet.eu'
-channels = ['#nsw-anime-test']
+channels = ['#nsw-anime', '#nsw-anime-test']
 owner = 'MartinMartimeo'
 
 # password is the NickServ password, serverpass is the server password
@@ -28,6 +28,9 @@ extra = []
 external = {
    '*': ['!'] # default whitelist, allow all
 }
+
+# We want the prefix to be !
+prefix = "[!]"
 
 # What URL the stream is located
 stream_url = "http://5.9.88.35:8000/"
