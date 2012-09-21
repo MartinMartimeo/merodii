@@ -34,7 +34,7 @@ def read_sendunginfo(url):
 
         # Parse
         (sendung_title, sendung_thema, sendung_start) = rtn.split("$")
-        read_sendunginfo.data = {'sendung_title': sendung_title, 'sendung_thema': sendung_thema, 'sendung_start': sendung_start}
+        read_sendunginfo.data = {'sendung_title': sendung_title.strip(), 'sendung_thema': sendung_thema.strip(), 'sendung_start': sendung_start.strip()}
     return read_sendunginfo.data
 read_sendunginfo.last = 0
 read_sendunginfo.time = 60
