@@ -10,6 +10,7 @@ import subprocess
 import sys
 
 from helper.icy import cached_streamname
+from helper.nsw import read_sendunginfo
 
 def stream(phenny, input):
     """
@@ -22,6 +23,19 @@ def stream(phenny, input):
 stream.commands = ['stream']
 stream.example = "!stream Zeigt aktuellen Song an."
 stream.priority = 'low'
+
+def sendung(phenny, input):
+    """
+    zeigt das aktuelle Lied auf dem Stream
+    """
+
+    info = read_sendunginfo(phenny.config.sendung_url)
+    phenny.say("%s mit %s seit %s" % (info["sendung_title"], info["sendung_thema"], info["sendung_start"]))
+    return
+sendung.commands = ['sendung']
+sendung.example = "!sendung Zeigt die aktuelle Sendung an."
+sendung.priority = 'low'
+
 
 def fliegen(phenny, input):
     """

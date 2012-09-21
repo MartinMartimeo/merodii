@@ -109,7 +109,7 @@ def cached_streaminfos(url, mount, song=None):
     """
 
     # Update if old or non existant
-    if cached_streaminfos.last < time.time() - cached_streaminfos.time or cached_streaminfos.data:
+    if cached_streaminfos.last < time.time() - cached_streaminfos.time or not cached_streaminfos.data:
         cached_streaminfos.info = read_icyinfo("%s/%s" % (url, mount))
         cached_streaminfos.data = read_xslinfo("%s/status.xsl?mount=/%s" % (url, mount))
         cached_streaminfos.song = {"song": read_nswstreaminfo(song)}

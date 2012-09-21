@@ -36,6 +36,7 @@ prefix = "[!]"
 stream_url = "http://5.9.88.35:8000/"
 stream_mount = "nsw-anime"
 stream_song = "http://www.nsw-anime.de/modules/mod_shoutcast/info.php?currentSong=1"
+sendung_url = "http://www.nsw-anime.de/pic.php?request=text"
 
 # Messages
 msg_fliegen = "CuCu und danke für den Fisch"
@@ -45,7 +46,7 @@ msg_kekse_phenny = "mampft alle Kekse selber auf."
 msg_pluesch_nobody = "plüscht %s."
 msg_pluesch_anybody = "plüscht %s."
 msg_pluesch_phenny = "findet keinen zum plüschen und kuschelt mit Oto-chan."
-msg_hilfe = "Befehle die ich kenne sind fliegen, kekse, pluesch, hilfe, stream, glaskugel, zitat"
+msg_hilfe = "Befehle die ich kenne sind fliegen, kekse, pluesch, hilfe, s sendung,tream, glaskugel, zitat"
 
 # Authserv
 authserv = True
