@@ -120,7 +120,7 @@ cached_streaminfos.last = 0
 cached_streaminfos.data = None
 cached_streaminfos.song = None
 cached_streaminfos.info = None
-cached_streaminfos.time = 60 # 1 minute
+cached_streaminfos.time = 30 # 1/2 minute
 
 def cached_streamname(url, mount, song=None):
     """
