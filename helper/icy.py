@@ -35,6 +35,36 @@ def read_icyinfo(url):
 
     return rtn
 
+def read_nswstreaminfo(url):
+    """
+        Ließt den aktuellen Song aus
+    """
+
+    # Init urllib
+    request = urllib.request.Request(url)
+    opener = urllib.request.build_opener()
+
+
+    # Regex
+    regex = re.compile(r'<div[^>]*>(.*)<\/div>', re.U + re.I)
+
+    # Read data
+    data = opener.open(request, None, 1)
+    rtn = ""
+    while True:
+        line = data.readline()
+        if not line:
+            break
+        line = line.decode("utf-8")
+        rtn += " " + line
+
+    # Parse
+    match = re.search(regex, rtn)
+    if not match:
+        return None
+    song = match.group(1)
+    return song
+
 def read_xslinfo(url):
 
     # Init urllib
@@ -60,6 +90,7 @@ def read_xslinfo(url):
         line_value = data.readline()
         if not line_value:
             break
+        line_value = line_value.decode("utf-8")
         match = re.search(regex_value, line_value)
         if not match:
             continue
@@ -70,7 +101,7 @@ def read_xslinfo(url):
     return info
 
 
-def cached_streaminfos(url, mount):
+def cached_streaminfos(url, mount, song=None):
     """
         Cached die icyinfo, sodass nur einmal in der Minute abgefragt wird
 
@@ -81,20 +112,26 @@ def cached_streaminfos(url, mount):
     if cached_streaminfos.last < time.time() - cached_streaminfos.time or cached_streaminfos.data:
         cached_streaminfos.info = read_icyinfo("%s/%s" % (url, mount))
         cached_streaminfos.data = read_xslinfo("%s/status.xsl?mount=/%s" % (url, mount))
+        cached_streaminfos.song = {"song": read_nswstreaminfo(song)}
         cached_streaminfos.last = time.time()
 
-    return dict(list(cached_streaminfos.data.items()) + list(cached_streaminfos.info.items()))
+    return dict(list(cached_streaminfos.data.items()) + list(cached_streaminfos.info.items()) + list(cached_streaminfos.song.items()))
 cached_streaminfos.last = 0
 cached_streaminfos.data = None
+cached_streaminfos.song = None
 cached_streaminfos.info = None
 cached_streaminfos.time = 60 # 1 minute
 
-def cached_streamname(url, mount):
+def cached_streamname(url, mount, song=None):
     """
         Gibt zurück was für eine aktuelle Statio angezeigt werden würde
     """
 
-    data = cached_streaminfos(url, mount)
+    data = cached_streaminfos(url, mount, song)
+    if "name" in data.keys() and "song" in data.keys():
+        return data["name"] + " mit: " + data["song"]
+    if "description" in data.keys() and "song" in data.keys():
+        return data["description"] + " mit: " + data["song"]
     if "name" in data.keys():
         return data["name"]
     if "description" in data.keys():
@@ -102,6 +139,5 @@ def cached_streamname(url, mount):
 
     return None
 
-
 if __name__ == "__main__":
-    print ("%s" % cached_streaminfos("http://5.9.88.35:8000/", "nsw-anime"))
+    print ("%s" % cached_streamname("http://5.9.88.35:8000/", "nsw-anime", "http://www.nsw-anime.de/modules/mod_shoutcast/info.php?currentSong=1"))

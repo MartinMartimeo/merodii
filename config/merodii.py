@@ -35,6 +35,7 @@ prefix = "[!]"
 # What URL the stream is located
 stream_url = "http://5.9.88.35:8000/"
 stream_mount = "nsw-anime"
+stream_song = "http://www.nsw-anime.de/modules/mod_shoutcast/info.php?currentSong=1"
 
 # Messages
 msg_fliegen = "CuCu und danke für den Fisch"
