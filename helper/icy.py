@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
     Read an icecast stream
@@ -52,6 +52,7 @@ def read_xslinfo(url):
         line_key = data.readline()
         if not line_key:
             break
+        line_key = line_key.decode("utf-8")
         match = re.search(regex_key, line_key)
         if not match:
             continue
@@ -87,3 +88,20 @@ cached_streaminfos.last = 0
 cached_streaminfos.data = None
 cached_streaminfos.info = None
 cached_streaminfos.time = 60 # 1 minute
+
+def cached_streamname(url, mount):
+    """
+        Gibt zurück was für eine aktuelle Statio angezeigt werden würde
+    """
+
+    data = cached_streaminfos(url, mount)
+    if "name" in data.keys():
+        return data["name"]
+    if "description" in data.keys():
+        return data["description"]
+
+    return None
+
+
+if __name__ == "__main__":
+    print ("%s" % cached_streaminfos("http://5.9.88.35:8000/", "nsw-anime"))

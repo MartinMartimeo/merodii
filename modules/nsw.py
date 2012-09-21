@@ -9,15 +9,15 @@ __date__ = '20.09.12 - 23:15'
 import subprocess
 import sys
 
-from helper.icy import cached_streaminfos
+from helper.icy import cached_streamname
 
 def stream(phenny, input):
     """
     zeigt das aktuelle Lied auf dem Stream
     """
 
-    info = cached_streaminfos(phenny.config.stream_url, phenny.config.stream_mount)
-    phenny.say("Aktuell sendet: %s" % info["description"])
+    info = cached_streamname(phenny.config.stream_url, phenny.config.stream_mount)
+    phenny.say("Aktuell sendet: %s" % info)
     return
 stream.commands = ['stream']
 stream.example = "!stream Zeigt aktuellen Song an."
