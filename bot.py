@@ -160,6 +160,8 @@ class Phenny(irc.Bot):
             if attr == 'reply': 
                return (lambda msg: 
                   self.bot.msg(sender, origin.nick + ': ' + msg))
+            elif attr == "action":
+                return lambda msg : self.bot.msg(sender, '\x01ACTION %s\x01' % msg)
             elif attr == 'say': 
                return lambda msg: self.bot.msg(sender, msg)
             return getattr(self.bot, attr)
