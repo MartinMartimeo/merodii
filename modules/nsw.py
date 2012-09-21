@@ -16,7 +16,7 @@ def stream(phenny, input):
     zeigt das aktuelle Lied auf dem Stream
     """
 
-    info = cached_streamname(phenny.config.stream_url, phenny.config.stream_mount)
+    info = cached_streamname(phenny.config.stream_url, phenny.config.stream_mount, phenny.config.stream_song)
     phenny.say("Aktuell sendet: %s" % info)
     return
 stream.commands = ['stream']
