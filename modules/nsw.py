@@ -30,28 +30,29 @@ def fliegen(phenny, input):
 fliegen.commands = ['fliegen']
 fliegen.priority = 'low'
 
-def kekse(phenny, input):
+def fun(phenny, input):
     """
     Merodii wirft Kekse auf einen User der im Chat Online ist, ist der User nicht vorhanden frisst sie die Kekse selber
+    Merodii plüscht bestimmten User, ist der User nicht vorhanden plüscht sie Oto
     """
-    nick_to = input.match.group(0)
+    nick_to = input.match.group(2)
+    if nick_to:
+        nick_to = nick_to.encode("utf-8")
+    action = input.match.group(1)
     nicks = uchan(input.sender)
 
     if not nick_to:
-        phenny.say(phenny.config.msg_kekse_nobody % input.nick)
-        return
-
-    if nick_to == phenny.nick:
-        phenny.say(phenny.config.msg_kekse_phenny)
-        return
-
-    if nick_to in nicks:
-        phenny.say(phenny.config.msg_kekse_anybody % nick_to)
-        return
-kekse.commands = ['kekse']
-kekse.priority = 'low'
-
-
+        msg = getattr(phenny.config, "msg_%s_nobody" % action) % input.nick
+    elif nick_to == phenny.nick:
+        msg = getattr(phenny.config, "msg_%s_phenny" % action)
+    elif nick_to in nicks.keys() and nicks[nick_to]:
+        msg = getattr(phenny.config, "msg_%s_anybody" % action) % nick_to
+    else:
+        msg = getattr(phenny.config, "msg_%s_phenny" % action)
+    phenny.action(msg)
+    return
+fun.commands = ['kekse', 'pluesch']
+fun.priority = 'low'
 
 
 def uchan(chan):
@@ -118,16 +119,12 @@ def on_names(phenny, input):
     list user
     """
     nicks = input.match.group(0)
-    uchan(input.sender)
+    channel = input.args[2]
+    uchan(channel)
     for nick in nicks.split():
-        uchan.data[input.sender][nick] = True
+        uchan.data[channel][nick.strip("@%+")] = True
 on_names.event = '353'
 on_names.rule = r'(.*)'
-
-
-kekse.commands = ['kekse']
-kekse.priority = 'low'
-
 
 if __name__ == '__main__':
     print __doc__.strip()

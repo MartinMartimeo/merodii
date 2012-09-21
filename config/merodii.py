@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 nick = 'MartinsMerodiiClon'
 host = 'irc.ircplanet.eu'
 channels = ['#nsw-anime-test']
@@ -31,10 +34,12 @@ stream_url = "http://5.9.88.35:8000/"
 stream_mount = "nsw-anime"
 
 # Messages
-msg_fliegen = "CuCu und danke fuer den Fisch"
+msg_fliegen = "CuCu und danke für den Fisch"
 msg_kekse_nobody = "bewirft %s mit Keksen."
 msg_kekse_anybody = "bewirft %s mit Keksen"
 msg_kekse_phenny = "mampft alle Kekse selber auf."
-
+msg_pluesch_nobody = "plüscht %s."
+msg_pluesch_anybody = "plüscht %s."
+msg_pluesch_phenny = "kuschelt mit Otochan."
 # EOF
 
