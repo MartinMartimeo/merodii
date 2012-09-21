@@ -62,6 +62,10 @@ def startup(phenny, input):
       phenny.msg('NickServ', 'IDENTIFY %s' % phenny.config.password)
       time.sleep(5)
 
+   if hasattr(phenny.config, "authserv"):
+       phenny.write(('AUTHSERV', "AUTH %s %s" % (phenny.config.authserv_account, phenny.config.authserv_password)))
+       time.sleep(1)
+
    # Cf. http://swhack.com/logs/2005-12-05#T19-32-36
    for channel in phenny.channels: 
       phenny.write(('JOIN', channel))
