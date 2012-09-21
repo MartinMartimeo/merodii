@@ -101,6 +101,11 @@ def fun(phenny, input):
     nick_to = input.match.group(2)
     if nick_to:
         nick_to = nick_to.strip()
+
+        args = nick_to.split()
+        if len(args) > 1:
+            nick_to = args[0].strip()
+            
     action = input.match.group(1).strip()
     nicks = uchan(input.sender)
 
