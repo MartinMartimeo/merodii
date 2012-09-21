@@ -41,5 +41,6 @@ msg_kekse_phenny = "mampft alle Kekse selber auf."
 msg_pluesch_nobody = "plüscht %s."
 msg_pluesch_anybody = "plüscht %s."
 msg_pluesch_phenny = "kuschelt mit Otochan."
+msg_hilfe = "Befehle die ich kenne sind fliegen, kekse, pluesch, hilfe, stream, glaskugel, zitat"
 # EOF
 

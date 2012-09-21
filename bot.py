@@ -89,7 +89,7 @@ class Phenny(irc.Bot):
          if func.__doc__: 
             if hasattr(func, 'example'): 
                example = func.example
-               example = example.replace('$nickname', self.nick)
+               #example = example.replace('$nickname', self.nick)
             else: example = None
             self.doc[func.name] = (func.__doc__, example)
          self.commands[priority].setdefault(regexp, []).append(func)
