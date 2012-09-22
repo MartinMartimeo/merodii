@@ -124,20 +124,26 @@ cached_streaminfos.time = 30 # 1/2 minute
 
 def cached_streamname(url, mount, song=None):
     """
-        Gibt zurück was für eine aktuelle Statio angezeigt werden würde
+        Gibt zurück was für eine aktuelle Station angezeigt werden würde
+
+        return name (if not started with /) or description mit (if song) song
     """
 
     data = cached_streaminfos(url, mount, song)
-    if "name" in data.keys() and "song" in data.keys():
-        return data["name"] + " mit: " + data["song"]
-    if "description" in data.keys() and "song" in data.keys():
-        return data["description"] + " mit: " + data["song"]
-    if "name" in data.keys():
-        return data["name"]
-    if "description" in data.keys():
-        return data["description"]
 
-    return None
+    if not data:
+        return None
+    stream_name = ""
+    if "name" in data.keys():
+        stream_name = data["name"]
+    if "description" in data.keys() or stream_name.startswith("/"):
+        stream_name = data["description"]
+    if not stream_name:
+        return None
+    # Song
+    if "song" in data.keys():
+        stream_name += " mit: " + data["song"]
+    return stream_name
 
 if __name__ == "__main__":
     print ("%s" % cached_streamname("http://5.9.88.35:8000/", "nsw-anime", "http://www.nsw-anime.de/modules/mod_shoutcast/info.php?currentSong=1"))
