@@ -136,7 +136,7 @@ def cached_streamname(url, mount, song=None):
     stream_name = ""
     if "name" in data.keys():
         stream_name = data["name"]
-    if "description" in data.keys() or stream_name.startswith("/"):
+    if (not "name" in data.keys() and "description" in data.keys()) or stream_name.startswith("/"):
         stream_name = data["description"]
     if not stream_name:
         return None
