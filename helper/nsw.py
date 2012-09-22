@@ -10,6 +10,8 @@ import time
 
 import urllib.request, urllib.error, urllib.parse
 
+from helper.html import unescape
+
 
 def read_sendunginfo(url):
     """
@@ -34,7 +36,9 @@ def read_sendunginfo(url):
 
         # Parse
         (sendung_title, sendung_thema, sendung_start) = rtn.split("$")
-        read_sendunginfo.data = {'sendung_title': sendung_title.strip(), 'sendung_thema': sendung_thema.strip(), 'sendung_start': sendung_start.strip()}
+        sendung_title = unescape(sendung_title.strip())
+        sendung_thema = unescape(sendung_thema.strip())
+        read_sendunginfo.data = {'sendung_title': sendung_title, 'sendung_thema': sendung_thema, 'sendung_start': sendung_start.strip()}
     return read_sendunginfo.data
 read_sendunginfo.last = 0
 read_sendunginfo.time = 60
