@@ -3,7 +3,6 @@
 
 nick = 'MartinsMerodiiClon'
 host = 'irc.ircplanet.eu'
-channels = ['#nsw-anime', '#nsw-anime-test']
 owner = 'MartinMartimeo'
 
 # password is the NickServ password, serverpass is the server password
@@ -28,6 +27,18 @@ extra = []
 external = {
    '*': ['!'] # default whitelist, allow all
 }
+
+# Channel to be joined
+channels = ['#nsw-anime', '#nsw-anime-test']
+
+# Some configurations
+staff_channel = ['#nsw-anime-test']
+main_channel = ['#nsw-anime']
+
+# The Topics
+topic_noarg = "%{nick}s - %{sendung_thema}s"
+topic_warg = "%{nick}s - %{arg}s"
+topic_playlist = "DJ Merodii mit der Anime Playlist"
 
 # We want the prefix to be !
 prefix = "[!]"

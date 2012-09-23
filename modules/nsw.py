@@ -153,6 +153,55 @@ hilfe.example = '!hilfe zeigt die Hilfe an'
 hilfe.priority = 'low'
 
 
+def dj(phenny, input):
+    """
+        Ändert das Topic vom NSW Main Channel
+    """
+
+    # Check Access
+    if input.sender not in phenny.config.staff_channel:
+        return
+
+    arg = input.group(2)
+    info = read_sendunginfo(phenny.config.sendung_url)
+
+    msg = ""
+    if not arg:
+        msg = phenny.config.topic_noarg
+    else:
+        msg = phenny.config.topic_warg
+
+    info["arg"] = arg
+    info["nick"] = input.nick
+    msg %= info
+
+    # Run
+    for chan in phenny.config.main_channel:
+        phenny.write(['CHANSERV'], "TOPIC %s %s" % (chan, msg))
+    return
+dj.commands = ['dj']
+dj.priority = 'middle'
+
+def pl(phenny, input):
+    """
+        Zurücksetzen des Topics
+    """
+
+    # Check Access
+    if input.sender not in phenny.config.staff_channel:
+        return
+
+    msg = phenny.config.topic_playlist
+
+    # Run
+    for chan in phenny.config.main_channel:
+        phenny.write(['CHANSERV'], "TOPIC %s %s" % (chan, msg))
+    return
+pl.commands = ['pl']
+pl.priority = 'middle'
+
+
+
 # --------------
 """
     Remembers the people in channel
