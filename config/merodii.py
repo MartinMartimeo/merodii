@@ -36,7 +36,7 @@ staff_channel = ['#nsw-anime-test']
 main_channel = ['#nsw-anime']
 
 # The Topics
-topic_noarg = "%{nick}s - %{sendung_thema}s"
+topic_noarg = "%{nick}s - %{sendung_title}s"
 topic_warg = "%{nick}s - %{arg}s"
 topic_playlist = "DJ Merodii mit der Anime Playlist"
 
