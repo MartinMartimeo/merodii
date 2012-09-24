@@ -26,11 +26,14 @@ stream.priority = 'low'
 
 def sendung(phenny, input):
     """
-    zeigt das aktuelle Lied auf dem Stream
+    zeigt die aktuelle Sendung auf dem Stream
     """
 
     info = read_sendunginfo(phenny.config.sendung_url)
-    phenny.say("%s mit %s seit %s" % (info["sendung_title"], info["sendung_thema"], info["sendung_start"]))
+    if info["sendung_thema"]:
+        phenny.say("%s mit %s seit %s" % (info["sendung_title"], info["sendung_thema"], info["sendung_start"]))
+    else:
+        phenny.say("%s seit %s" % (info["sendung_title"], info["sendung_start"]))
     return
 sendung.commands = ['sendung']
 sendung.example = "!sendung Zeigt die aktuelle Sendung an."
