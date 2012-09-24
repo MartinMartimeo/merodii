@@ -183,7 +183,7 @@ def dj(phenny, input):
         phenny.write(['CHANSERV'], "TOPIC %s %s" % (chan, msg))
     return
 dj.commands = ['dj']
-dj.priority = 'middle'
+dj.priority = 'medium'
 
 def pl(phenny, input):
     """
@@ -201,7 +201,7 @@ def pl(phenny, input):
         phenny.write(['CHANSERV'], "TOPIC %s %s" % (chan, msg))
     return
 pl.commands = ['pl']
-pl.priority = 'middle'
+pl.priority = 'medium'
 
 
 
