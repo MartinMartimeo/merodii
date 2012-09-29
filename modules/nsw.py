@@ -10,7 +10,7 @@ import subprocess
 import sys
 
 from helper.icy import cached_streamname
-from helper.nsw import read_sendunginfo
+from helper.nsw import read_sendunginfo, read_nextsendung
 
 def stream(phenny, input):
     """
@@ -23,6 +23,20 @@ def stream(phenny, input):
 stream.commands = ['stream']
 stream.example = "!stream Zeigt aktuellen Song an."
 stream.priority = 'low'
+
+
+def next(phenny, input):
+    """
+    zeigt die nächste Sendung an
+    """
+
+    info = read_nextsendung()
+    phenny.say("Nächste Sendung: %(title)s am %(when)s" % info)
+    return
+next.commands = ['next']
+next.example = "!next Zeigt die nächste Sendung an."
+next.priority = 'low'
+
 
 def sendung(phenny, input):
     """
