@@ -7,6 +7,7 @@ __author__ = 'Martin Martimeo <martin@martimeo.de>'
 __date__ = '21.09.12 - 19:32'
 
 import re
+import socket
 import time
 
 import urllib.request, urllib.error, urllib.parse
@@ -25,7 +26,12 @@ def read_nextsendung():
         opener = urllib.request.build_opener()
 
         # Read data
-        data = opener.open(request, None, 1)
+        try:
+            data = opener.open(request, None, 2)
+        except socket.timeout:
+            return read_nextsendung.data
+
+        # Collect Data
         rtn = ""
         while True:
             line = data.readline()
