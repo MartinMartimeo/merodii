@@ -7,7 +7,9 @@ __author__ = 'Martin Martimeo <martin@martimeo.de>'
 __date__ = '20.09.12 - 23:03'
 
 import re
+import socket
 import time
+
 import urllib.request, urllib.error, urllib.parse
 
 def read_icyinfo(url):
@@ -21,7 +23,12 @@ def read_icyinfo(url):
     opener = urllib.request.build_opener()
 
     # Read data
-    data = opener.open(request, None, 1)
+    try:
+        data = opener.open(request, None, 2)
+    except socket.timeout:
+        return None
+
+    # Collect Data
     line = data.readline()
     info = data.info()
     data.close()
@@ -49,7 +56,12 @@ def read_nswstreaminfo(url):
     regex = re.compile(r'<div[^>]*>(.*)<\/div>', re.U + re.I)
 
     # Read data
-    data = opener.open(request, None, 1)
+    try:
+        data = opener.open(request, None, 2)
+    except socket.timeout:
+        return None
+
+    # Collect data
     rtn = ""
     while True:
         line = data.readline()
@@ -76,7 +88,12 @@ def read_xslinfo(url):
     regex_value = re.compile(r'<td\s[^>]*class=\"streamdata\">(.*)<\/td>', re.U + re.I)
 
     # Read data
-    data = opener.open(request, None, 1)
+    try:
+        data = opener.open(request, None, 2)
+    except socket.timeout:
+        return None
+
+    # Collect Data
     info = {}
     while True:
         line_key = data.readline()
@@ -109,10 +126,19 @@ def cached_streaminfos(url, mount, song=None):
     """
 
     # Update if old or non existant
-    if cached_streaminfos.last < time.time() - cached_streaminfos.time or not cached_streaminfos.data:
-        cached_streaminfos.info = read_icyinfo("%s/%s" % (url, mount))
-        cached_streaminfos.data = read_xslinfo("%s/status.xsl?mount=/%s" % (url, mount))
-        cached_streaminfos.song = {"song": read_nswstreaminfo(song)}
+    if cached_streaminfos.last < time.time() - cached_streaminfos.time or not cached_streaminfos.data or not cached_streaminfos.info or not cached_streaminfos.song:
+        info = read_icyinfo("%s/%s" % (url, mount))
+        if info:
+            cached_streaminfos.info = info
+
+        data = read_xslinfo("%s/status.xsl?mount=/%s" % (url, mount))
+        if data:
+            cached_streaminfos.data = data
+
+        song = {"song": read_nswstreaminfo(song)}
+        if song["song"]:
+            cached_streaminfos.song = song
+
         cached_streaminfos.last = time.time()
 
     return dict(list(cached_streaminfos.data.items()) + list(cached_streaminfos.info.items()) + list(cached_streaminfos.song.items()))
