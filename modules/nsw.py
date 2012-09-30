@@ -127,8 +127,8 @@ def fun(phenny, input):
 
     if not nick_to:
         msg = getattr(phenny.config, "msg_%s_nobody" % action) % input.nick
-    elif nick_to == phenny.nick:
-        msg = getattr(phenny.config, "msg_%s_phenny" % action)
+    elif nick_to == phenny.nick or nick_to in phenny.config.myself:
+        msg = getattr(phenny.config, "msg_%s_myself" % action)
     elif nick_to in list(nicks.keys()) and nicks[nick_to]:
         msg = getattr(phenny.config, "msg_%s_anybody" % action) % nick_to
     else:

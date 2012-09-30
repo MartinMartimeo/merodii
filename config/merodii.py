@@ -50,14 +50,19 @@ stream_mount = "nsw-anime"
 stream_song = "http://www.nsw-anime.de/modules/mod_shoutcast/info.php?currentSong=1"
 sendung_url = "http://www.nsw-anime.de/pic.php?request=text"
 
+# Consider myself
+myself = ["Merodii", "merodii"]
+
 # Messages
 msg_fliegen = "CuCu und danke für den Fisch"
 msg_kekse_nobody = "bewirft %s mit Keksen."
 msg_kekse_anybody = "bewirft %s mit Keksen"
 msg_kekse_phenny = "mampft alle Kekse selber auf."
+msg_kekse_myself = "hüpft zu Merodii und gibt ihr einen Keks."
 msg_pluesch_nobody = "plüscht %s."
 msg_pluesch_anybody = "plüscht %s."
 msg_pluesch_phenny = "findet keinen zum plüschen und kuschelt mit Merodii."
+msg_pluesch_myself = "hüpft zu Merodii und kuschelt sie."
 msg_hilfe = "Befehle die ich kenne sind fliegen, kekse, pluesch, hilfe, s sendung,tream, zitat"
 
 # Authserv
