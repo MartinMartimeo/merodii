@@ -64,5 +64,7 @@ authserv = True
 authserv_account = "Merodii"
 authserv_password = "HackMe!"
 
+umode = "x"
+
 # EOF
 
