@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-nick = 'MartinsMerodiiClon'
+nick = 'Otochan'
 host = 'irc.ircplanet.eu'
 owner = 'MartinMartimeo'
 
@@ -29,10 +29,10 @@ external = {
 }
 
 # Channel to be joined
-channels = ['#nsw-anime', '#nsw-anime-test']
+channels = ['#nsw-anime', '#nsw-anime-test', '#nsw-intern']
 
 # Some configurations
-staff_channel = ['#nsw-anime-test']
+staff_channel = ['#nsw-intern']
 main_channel = ['#nsw-anime']
 
 # The Topics
@@ -56,8 +56,8 @@ msg_kekse_anybody = "bewirft %s mit Keksen"
 msg_kekse_phenny = "mampft alle Kekse selber auf."
 msg_pluesch_nobody = "plüscht %s."
 msg_pluesch_anybody = "plüscht %s."
-msg_pluesch_phenny = "findet keinen zum plüschen und kuschelt mit Oto-chan."
-msg_hilfe = "Befehle die ich kenne sind fliegen, kekse, pluesch, hilfe, s sendung,tream, glaskugel, zitat"
+msg_pluesch_phenny = "findet keinen zum plüschen und kuschelt mit Merodii."
+msg_hilfe = "Befehle die ich kenne sind fliegen, kekse, pluesch, hilfe, s sendung,tream, zitat"
 
 # Authserv
 authserv = True
