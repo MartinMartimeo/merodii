@@ -4,6 +4,7 @@
 nick = 'Otochan'
 host = 'irc.ircplanet.eu'
 owner = 'MartinMartimeo'
+name = 'Merodiis Otochan - Phennybot for #nsw-anime by MartinMartimeo - https://github.com/MartinMartimeo/merodii'
 
 # password is the NickServ password, serverpass is the server password
 # password = 'example'
