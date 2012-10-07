@@ -37,8 +37,8 @@ staff_channel = ['#nsw-intern']
 main_channel = ['#nsw-anime']
 
 # The Topics
-topic_noarg = "%{nick}s - %{sendung_title}s"
-topic_warg = "%{nick}s - %{arg}s"
+topic_noarg = "%(nick)s - %(sendung_title)s"
+topic_warg = "%(nick)s - %(arg)s"
 topic_playlist = "DJ Merodii mit der Anime Playlist"
 
 # We want the prefix to be !
