@@ -1,10 +1,10 @@
 Merodii
-=======
+=====================
 
 Eine Implementierung von Merodii (Chatbot für #nsw-anime)
 
 Features
-=======
+=====================
 (quoted by Monk42)
 
 *
@@ -25,3 +25,22 @@ Features
 
     !dj SENDUNGSNAMEN = damit änderte man den Topic vom NSW CHannel 
     !pl = damit setzte man den Topic zurück auf die Playliste wenn die Sendung vorbei war
+
+
+Installierung
+=====================
+
+Benötigt wird python3.
+Zum starten: python3 phenny -c config/merodii.py
+
+Implementierung
+=====================
+
+Phenny selbst ist ein IRC Bot-Framework zur einfachen Implementation eines Bots.
+Die NSW Funktionen liegen in modules/nsw.py. Jede Funktion verfügt über einen Trigger (commands/event/rule), sowie einen Hilfetext (example).
+Im Helper Package liegen die Hilfsfunktionen zum auslesen von Website, Stream oder ähnlichem.
+Viele NSW Funktionen beziehen sich dabei aus config Einstellungen aus config/merodii.py. Ein Großteil der Konfiguration sollte darüber erfolgen.
+Aktive Module sind nsw und startup. Startup übernimmt die Authentifizierung gegenüber Authserv und das Betreten der Channel.
+
+
+
