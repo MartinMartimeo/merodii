@@ -33,7 +33,7 @@ external = {
 channels = ['#nsw-anime', '#nsw-anime-test', '#NSW-Intern']
 
 # Some configurations
-staff_channel = ['#nsw-intern']
+staff_channel = ['#NSW-Intern']
 main_channel = ['#nsw-anime']
 
 # The Topics

@@ -141,11 +141,20 @@ def cached_streaminfos(url, mount, song=None):
 
         cached_streaminfos.last = time.time()
 
+    if not cached_streaminfos.data:
+        cached_streaminfos.data = {}
+
+    if not cached_streaminfos.info:
+        cached_streaminfos.info = {}
+
+    if not cached_streaminfos.song:
+        cached_streaminfos.song = {}
+        
     return dict(list(cached_streaminfos.data.items()) + list(cached_streaminfos.info.items()) + list(cached_streaminfos.song.items()))
 cached_streaminfos.last = 0
-cached_streaminfos.data = None
-cached_streaminfos.song = None
-cached_streaminfos.info = None
+cached_streaminfos.data = {}
+cached_streaminfos.song = {}
+cached_streaminfos.info = {}
 cached_streaminfos.time = 30 # 1/2 minute
 
 def cached_streamname(url, mount, song=None):
