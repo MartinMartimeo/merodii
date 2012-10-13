@@ -30,7 +30,7 @@ external = {
 }
 
 # Channel to be joined
-channels = ['#nsw-anime', '#nsw-anime-test', '#nsw-intern']
+channels = ['#nsw-anime', '#nsw-anime-test', '#NSW-Intern']
 
 # Some configurations
 staff_channel = ['#nsw-intern']
