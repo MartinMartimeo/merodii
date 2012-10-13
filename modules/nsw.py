@@ -10,7 +10,7 @@ import subprocess
 import sys
 
 from helper.icy import cached_streamname
-from helper.nsw import read_sendunginfo, read_nextsendung
+from helper.nsw import read_sendunginfo, read_nextsendung, read_moddinginfo
 
 def stream(phenny, input):
     """
@@ -181,6 +181,7 @@ def dj(phenny, input):
 
     arg = input.group(2)
     info = read_sendunginfo(phenny.config.sendung_url)
+    data = read_moddinginfo(phenny.config.modding_url)
 
     msg = ""
     if not arg:
@@ -190,6 +191,10 @@ def dj(phenny, input):
 
     info["arg"] = arg
     info["nick"] = input.nick
+
+    for (key, value) in data.items():
+        info[key] = value
+
     msg %= info
 
     # Run

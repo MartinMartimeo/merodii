@@ -37,7 +37,7 @@ staff_channel = ['#nsw-intern']
 main_channel = ['#nsw-anime']
 
 # The Topics
-topic_noarg = "%(nick)s - %(sendung_title)s"
+topic_noarg = "Aktuell sendet %(sendung_mod_name)s mit %(sendung_title)s"
 topic_warg = "%(nick)s - %(arg)s"
 topic_playlist = "DJ Merodii mit der Anime Playlist"
 
@@ -49,6 +49,7 @@ stream_url = "http://5.9.88.35:8000/"
 stream_mount = "nsw-anime"
 stream_song = "http://www.nsw-anime.de/modules/mod_shoutcast/info.php?currentSong=1"
 sendung_url = "http://www.nsw-anime.de/pic.php?request=text"
+modding_url = "http://www.nsw-anime.de/pic.php?request=pic"
 
 # Consider myself
 myself = ["Merodii", "merodii"]

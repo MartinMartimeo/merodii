@@ -62,6 +62,40 @@ read_nextsendung.data = None
 
 
 
+
+def read_moddinginfo(url):
+    """
+        Ließt Sendungstitel, Sendungsthema, Uhrzeit aus
+    """
+
+    if read_moddinginfo.last < time.time() - read_moddinginfo.time or not read_moddinginfo.data:
+
+        # Init urllib
+        request = urllib.request.Request(url)
+        opener = urllib.request.build_opener()
+
+        # Read data
+        data = opener.open(request, None, 1)
+        rtn = ""
+        while True:
+            line = data.readline()
+            if not line:
+                break
+            line = line.decode("utf-8")
+            rtn += " " + line
+
+        print("%s" % rtn)
+
+        # Parse
+        (sendung_mod_image, sendung_image, sendung_start_date, sendung_start_time) = rtn.strip().split(" ")
+        sendung_mod_name = " ".join(sendung_mod_image.split(".")[:-1]).strip()
+        read_moddinginfo.data = {'sendung_mod_image': sendung_mod_image, 'sendung_image': sendung_image, 'sendung_start_date': sendung_start_date.strip(), 'sendung_start_time': sendung_start_time, 'sendung_mod_name': sendung_mod_name}
+        read_moddinginfo.last = time.time()
+    return read_moddinginfo.data
+read_moddinginfo.last = 0
+read_moddinginfo.time = 60
+read_moddinginfo.data = None
+
 def read_sendunginfo(url):
     """
         Ließt Sendungstitel, Sendungsthema, Uhrzeit aus
@@ -95,4 +129,4 @@ read_sendunginfo.time = 60
 read_sendunginfo.data = None
 
 if __name__ == "__main__":
-    print("%s" % read_nextsendung())
+    print("%s" % read_moddinginfo("http://www.nsw-anime.de/pic.php?request=pic"))
