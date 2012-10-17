@@ -206,7 +206,7 @@ class Bot(asynchat.async_chat):
 
 class TestBot(Bot): 
    def f_ping(self, origin, match, args): 
-      delay = m.group(1)
+      delay = match.group(1)
       if delay is not None: 
          import time
          time.sleep(int(delay))

@@ -52,4 +52,4 @@ f_reload.priority = 'low'
 f_reload.thread = False
 
 if __name__ == '__main__': 
-   print __doc__.strip()
+   print(__doc__.strip())
