@@ -149,7 +149,7 @@ def cached_streaminfos(url, mount, song=None):
 
     if not cached_streaminfos.song:
         cached_streaminfos.song = {}
-        
+
     return dict(list(cached_streaminfos.data.items()) + list(cached_streaminfos.info.items()) + list(cached_streaminfos.song.items()))
 cached_streaminfos.last = 0
 cached_streaminfos.data = {}

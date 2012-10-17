@@ -12,7 +12,7 @@ import time
 
 import urllib.request, urllib.error, urllib.parse
 
-from helper.html import unescape
+from helper.unescape import unescape
 
 def read_nextsendung():
     """
@@ -44,15 +44,23 @@ def read_nextsendung():
             rtn += " " + line
 
         # Compile Regex
-        regex = re.compile(r'<h3[^>]*>\s*NSW-Sendeplan\s*<\/h3[^>]*>\s*<ul[^>]*>\s*<li[^>]*>\s*<a[^>]*>(.*)<\/a>\s*<br[^>]*>\s*(.*)\s*<br[^>]*>\s*<\/li[^>]*>\s*', re.U + re.I)
+        regex_list = re.compile(r'<h3[^>]*>\s*NSW-Sendeplan\s*<\/h3[^>]*>\s*<ul[^>]*>((?:\s*<li[^>]*>\s*<a[^>]*>(?:.*)<\/a>\s*<br[^>]*>\s*(?:.*)\s*<br[^>]*>\s*<\/li[^>]*>\s*)+)', re.U + re.I)
+        regex_li = re.compile(r'<li[^>]*>\s*<a[^>]*>(.*)<\/a>\s*<br[^>]*>\s*((\d+)\.\s*.*\s*\((\d+):(\d+)\))\s*<br[^>]*>\s*<\/li[^>]*>', re.U + re.I)
 
         # Parse
-        match = re.search(regex, rtn)
-        if match:
-            title = unescape(match.group(1))
-            when = unescape(match.group(2))
-            read_nextsendung.data = {'title': title, 'when': when}
-            read_nextsendung.last = time.time()
+        match_list = re.search(regex_list, rtn)
+        if match_list:
+            list = match_list.group(1)
+
+            a_time_hour = time.localtime().tm_min
+            a_time_day = time.localtime().tm_mday
+            for (title, when, when_day, when_time_hour, when_time_min) in re.findall(regex_li, list):
+                if int(when_day) <= a_time_day and int(when_time_hour) <= a_time_hour:
+                    continue
+                read_nextsendung.data = {'title': title, 'when': when}
+                read_nextsendung.last = time.time()
+                break
+
     return read_nextsendung.data
 read_nextsendung.last = 0
 read_nextsendung.time = 60
@@ -129,4 +137,4 @@ read_sendunginfo.time = 60
 read_sendunginfo.data = None
 
 if __name__ == "__main__":
-    print("%s" % read_moddinginfo("http://www.nsw-anime.de/pic.php?request=pic"))
+    print("%s" % read_nextsendung())
