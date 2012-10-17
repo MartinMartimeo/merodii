@@ -52,10 +52,16 @@ def read_nextsendung():
         if match_list:
             list = match_list.group(1)
 
-            a_time_hour = time.localtime().tm_min
+            a_time_hour = time.localtime().tm_hour
             a_time_day = time.localtime().tm_mday
             for (title, when, when_day, when_time_hour, when_time_min) in re.findall(regex_li, list):
-                if int(when_day) <= a_time_day and int(when_time_hour) <= a_time_hour:
+                if int(when_day) == a_time_day and int(when_time_hour) <= a_time_hour:
+                    continue
+                # Consider an delta of 15 to be as month break
+                if int(when_day) < a_time_day and a_time_day - int(when_day) < 15:
+                    continue
+                # Also when we have a day < 10 and a when day > 20 it should be a month break
+                if a_time_day < 10 and int(when_day) > 20:
                     continue
                 read_nextsendung.data = {'title': title, 'when': when}
                 read_nextsendung.last = time.time()
