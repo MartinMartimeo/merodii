@@ -53,7 +53,7 @@ sendung_url = "http://www.nsw-anime.de/pic.php?request=text"
 modding_url = "http://www.nsw-anime.de/pic.php?request=pic"
 
 # Consider myself
-myself = ["Merodii", "merodii", "DJMerodii"]
+myself = ["Merodii", "merodii", "Playlist_top"]
 
 # Messages
 msg_fliegen = "CuCu und danke für den Fisch"

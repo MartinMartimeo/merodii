@@ -159,4 +159,4 @@ read_sendunginfo.time = 60
 read_sendunginfo.data = None
 
 if __name__ == "__main__":
-    print("%s" % read_nextsendung())
+    print("%s" % read_moddinginfo("http://www.nsw-anime.de/pic.php?request=pic"))
