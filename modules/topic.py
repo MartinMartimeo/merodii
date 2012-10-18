@@ -40,7 +40,7 @@ def setup(phenny):
                 for chan in phenny.config.main_channel:
                     phenny.write(['CHANSERV'], "TOPIC %s %s" % (chan, topic))
 
-            time.sleep(2.5)
+            time.sleep(20)
 
     targs = (phenny, phenny.config)
     t = threading.Thread(target=monitor, args=targs)
