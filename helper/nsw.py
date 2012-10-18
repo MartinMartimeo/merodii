@@ -63,18 +63,34 @@ def read_nextsendung():
                 # Also when we have a day < 10 and a when day > 20 it should be a month break
                 if a_time_day < 10 and int(when_day) > 20:
                     continue
-                read_nextsendung.data = {'title': title, 'when': when}
+                read_nextsendung.data = {'next_sendung_title': title, 'next_sendung_when': when}
                 read_nextsendung.last = time.time()
                 break
 
     return read_nextsendung.data
 read_nextsendung.last = 0
-read_nextsendung.time = 60
+read_nextsendung.time = 240
 read_nextsendung.data = None
 
 
 
+def read_nswinfo(config):
 
+    info = {}
+
+    data_modding = read_moddinginfo(config.modding_url)
+    for (key, value) in data_modding.items():
+        info[key] = value
+
+    data_sendung = read_sendunginfo(config.sendung_url)
+    for (key, value) in data_sendung.items():
+        info[key] = value
+
+    data_next = read_nextsendung
+    for (key, value) in data_next.items():
+        info[key] = value
+
+    return info
 
 
 def read_moddinginfo(url):

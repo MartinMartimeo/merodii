@@ -18,7 +18,7 @@ exclude = ['admin']
 # If you want to enumerate a list of modules rather than disabling
 # some, use "enable = ['example']", which takes precedent over exclude
 # 
-enable = ['startup', 'nsw']
+enable = ['startup', 'nsw', 'topic']
 
 # Directories to load user modules from
 # e.g. /path/to/my/modules
@@ -39,7 +39,8 @@ main_channel = ['#nsw-anime']
 # The Topics
 topic_noarg = "Aktuell sendet %(sendung_mod_name)s mit %(sendung_title)s"
 topic_warg = "%(nick)s - %(arg)s"
-topic_playlist = "DJ Merodii mit der Anime Playlist"
+topic_playlist = "Aktuell sendet DJ Merodii mit der Anime Playlist"
+topic_next = "Aktuell sendet DJ Merodii mit der Anime Playlist - Nächste Sendung: "
 
 # We want the prefix to be !
 prefix = "[!]"
@@ -52,7 +53,7 @@ sendung_url = "http://www.nsw-anime.de/pic.php?request=text"
 modding_url = "http://www.nsw-anime.de/pic.php?request=pic"
 
 # Consider myself
-myself = ["Merodii", "merodii"]
+myself = ["Merodii", "merodii", "DJMerodii"]
 
 # Messages
 msg_fliegen = "CuCu und danke für den Fisch"
@@ -64,7 +65,7 @@ msg_pluesch_nobody = "plüscht %s."
 msg_pluesch_anybody = "plüscht %s."
 msg_pluesch_phenny = "findet keinen zum plüschen und kuschelt mit Merodii."
 msg_pluesch_myself = "hüpft zu Merodii und kuschelt sie."
-msg_hilfe = "Befehle die ich kenne sind fliegen, kekse, pluesch, hilfe, s sendung,tream, zitat"
+msg_hilfe = "Befehle die ich kenne sind fliegen, kekse, pluesch, hilfe, stream, sendung, next, zitat"
 
 # Authserv
 authserv = True

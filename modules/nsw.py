@@ -10,7 +10,7 @@ import subprocess
 import sys
 
 from helper.icy import cached_streamname
-from helper.nsw import read_sendunginfo, read_nextsendung, read_moddinginfo
+from helper.nsw import read_sendunginfo, read_nextsendung, read_nswinfo
 
 def stream(phenny, input):
     """
@@ -31,7 +31,7 @@ def next(phenny, input):
     """
 
     info = read_nextsendung()
-    phenny.say("Nächste Sendung: %(title)s am %(when)s" % info)
+    phenny.say("Nächste Sendung: %(next_sendung_title)s am %(next_sendung_when)s" % info)
     return
 next.commands = ['next']
 next.example = "!next Zeigt die nächste Sendung an."
@@ -180,8 +180,7 @@ def dj(phenny, input):
         return
 
     arg = input.group(2)
-    info = read_sendunginfo(phenny.config.sendung_url)
-    data = read_moddinginfo(phenny.config.modding_url)
+    info = read_nswinfo(phenny.config)
 
     msg = ""
     if not arg:
@@ -191,9 +190,6 @@ def dj(phenny, input):
 
     info["arg"] = arg
     info["nick"] = input.nick
-
-    for (key, value) in data.items():
-        info[key] = value
 
     msg %= info
 
