@@ -25,7 +25,7 @@ def setup(phenny):
             if nsw_info["sendung_start"] != phenny.last_starttime \
               or (nsw_info["next_sendung_title"] != phenny.last_topic and nsw_info["sendung_mod_name"] in config.myself):
                 phenny.last_starttime = nsw_info["next_sendung_title"]
-                phenny.last_topic = nsw_info["next_title"]
+                phenny.last_topic = nsw_info["next_sendung_title"]
 
                 topic = ""
                 if nsw_info["sendung_mod_name"] in config.myself:
