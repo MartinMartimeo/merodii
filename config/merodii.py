@@ -40,7 +40,7 @@ main_channel = ['#nsw-anime']
 topic_noarg = "Aktuell sendet %(sendung_mod_name)s mit %(sendung_title)s"
 topic_warg = "%(nick)s - %(arg)s"
 topic_playlist = "Aktuell sendet DJ Merodii mit der Anime Playlist"
-topic_next = "Aktuell sendet DJ Merodii mit der Anime Playlist - Nächste Sendung: "
+topic_next = "Aktuell sendet DJ Merodii mit der Anime Playlist - Nächste Sendung (%(next_sendung_when)s): %(next_sendung_title)s "
 
 # We want the prefix to be !
 prefix = "[!]"

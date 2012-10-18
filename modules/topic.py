@@ -15,7 +15,7 @@ from helper.nsw import read_nswinfo
 
 def setup(phenny):
     phenny.last_starttime = None
-    phenny.last_topic = None
+    phenny.last_nextwhen = None
 
     def monitor(phenny, config):
         time.sleep(5)
@@ -23,9 +23,9 @@ def setup(phenny):
 
             nsw_info = read_nswinfo(config)
             if nsw_info["sendung_start"] != phenny.last_starttime \
-              or (nsw_info["next_sendung_title"] != phenny.last_topic and nsw_info["sendung_mod_name"] in config.myself):
+              or (nsw_info["next_sendung_when"] != phenny.last_nextwhen and nsw_info["sendung_mod_name"] in config.myself):
                 phenny.last_starttime = nsw_info["next_sendung_title"]
-                phenny.last_topic = nsw_info["next_sendung_title"]
+                phenny.last_nextwhen = nsw_info["next_sendung_when"]
 
                 topic = ""
                 if nsw_info["sendung_mod_name"] in config.myself:
