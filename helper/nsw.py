@@ -86,7 +86,7 @@ def read_nswinfo(config):
     for (key, value) in data_sendung.items():
         info[key] = value
 
-    data_next = read_nextsendung
+    data_next = read_nextsendung()
     for (key, value) in data_next.items():
         info[key] = value
 
