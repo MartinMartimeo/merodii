@@ -27,6 +27,8 @@ def read_icyinfo(url):
         data = opener.open(request, None, 2)
     except socket.timeout:
         return None
+    except urllib.error.URLError:
+        return None
 
     # Collect Data
     line = data.readline()
@@ -59,6 +61,8 @@ def read_nswstreaminfo(url):
     try:
         data = opener.open(request, None, 2)
     except socket.timeout:
+        return None
+    except urllib.error.URLError:
         return None
 
     # Collect data

@@ -30,6 +30,8 @@ def read_nextsendung():
             data = opener.open(request, None, 2)
         except socket.timeout:
             return read_nextsendung.data
+        except urllib.error.URLError:
+            return read_nextsendung.data
 
         # Collect Data
         rtn = ""
@@ -105,7 +107,13 @@ def read_moddinginfo(url):
         opener = urllib.request.build_opener()
 
         # Read data
-        data = opener.open(request, None, 1)
+        try:
+            data = opener.open(request, None, 1)
+        except socket.timeout:
+            return read_moddinginfo.data
+        except urllib.error.URLError:
+            return read_moddinginfo.data
+
         rtn = ""
         while True:
             line = data.readline()
@@ -138,7 +146,13 @@ def read_sendunginfo(url):
         opener = urllib.request.build_opener()
 
         # Read data
-        data = opener.open(request, None, 1)
+        try:
+            data = opener.open(request, None, 1)
+        except socket.timeout:
+            return read_sendunginfo.data
+        except urllib.error.URLError:
+            return read_sendunginfo.data
+
         rtn = ""
         while True:
             line = data.readline()

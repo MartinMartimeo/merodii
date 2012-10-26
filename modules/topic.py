@@ -21,7 +21,7 @@ def setup(phenny):
     phenny.last_startsendung = None
 
     def monitor(phenny, config):
-        time.sleep(5)
+        time.sleep(25)
         while True:
 
             nsw_info = read_nswinfo(config)
