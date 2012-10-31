@@ -45,9 +45,13 @@ def read_nextsendung():
                 line = "..."
             rtn += " " + line
 
-        # Compile Regex
-        regex_list = re.compile(r'<h3[^>]*>\s*NSW-Sendeplan\s*<\/h3[^>]*>\s*<ul[^>]*>((?:\s*<li[^>]*>\s*<a[^>]*>(?:.*)<\/a>\s*<br[^>]*>\s*(?:.*)\s*<br[^>]*>\s*<\/li[^>]*>\s*)+)', re.U + re.I)
-        regex_li = re.compile(r'<li[^>]*>\s*<a[^>]*>(.*)<\/a>\s*<br[^>]*>\s*((\d+)\.\s*.*\s*\((\d+):(\d+)\))\s*<br[^>]*>\s*<\/li[^>]*>', re.U + re.I)
+        # Compile Regex (old website)
+        # regex_list = re.compile(r'<h3[^>]*>\s*NSW-Sendeplan\s*<\/h3[^>]*>\s*<ul[^>]*>((?:\s*<li[^>]*>\s*<a[^>]*>(?:.*)<\/a>\s*<br[^>]*>\s*(?:.*)\s*<br[^>]*>\s*<\/li[^>]*>\s*)+)', re.U + re.I)
+        # regex_li = re.compile(r'<li[^>]*>\s*<a[^>]*>(.*)<\/a>\s*<br[^>]*>\s*((\d+)\.\s*.*\s*\((\d+):(\d+)\))\s*<br[^>]*>\s*<\/li[^>]*>', re.U + re.I)
+
+        # Regex (new website)
+        regex_list = re.compile(r'<h3[^>]*>\s*Sendeplan\s*<\/h3[^>]*>\s*[\s\S]*\s*<table[^>]*mod_events_latest_table[^>]*>((?:\s*<tr[^>]*>\s*<td[^>]*mod_events_latest[^>]*>\s*<span[^>]*>.+<\/span[^>]*>.*<span[^>]*>.+<\/span[^>]*>\s*<br \/>\s*<span[^>]*>.+<\/span[^>]*>\s*<\/td[^>]*>\s*<\/tr[^>]*>\s*)+)<\/table[^>]*>\s*', re.U + re.I)
+        regex_li =  re.compile(r'<tr[^>]*>\s*<td[^>]*mod_events_latest[^>]*>\s*<span[^>]*>(\w+),\s+(\d+)\.(\w+)<\/span[^>]*>.*<span[^>]*>((\d+)[:](\d+))<\/span[^>]*>\s*<br \/>\s*<span[^>]*>\s*<a[^>]*>(.+)<\/a[^>]*>\s*<\/span[^>]*>\s*<\/td[^>]*>\s*<\/tr[^>]*>', re.U + re.I)
 
         # Parse
         match_list = re.search(regex_list, rtn)
@@ -56,7 +60,8 @@ def read_nextsendung():
 
             a_time_hour = time.localtime().tm_hour
             a_time_day = time.localtime().tm_mday
-            for (title, when, when_day, when_time_hour, when_time_min) in re.findall(regex_li, list):
+            # for (title, when, when_day, when_time_hour, when_time_min) in re.findall(regex_li, list):
+            for (when_wday, when_day, when_month, when, when_time_hour, when_time_min, title) in re.findall(regex_li, list):
                 if int(when_day) == a_time_day and int(when_time_hour) <= a_time_hour:
                     continue
                 # Consider an delta of 15 to be as month break
@@ -173,4 +178,4 @@ read_sendunginfo.time = 60
 read_sendunginfo.data = None
 
 if __name__ == "__main__":
-    print("%s" % read_moddinginfo("http://www.nsw-anime.de/pic.php?request=pic"))
+    print("%s" % read_nextsendung())
