@@ -79,17 +79,67 @@ read_nextsendung.last = 0
 read_nextsendung.time = 240
 read_nextsendung.data = None
 
+def read_newpage():
+    """
+        Ließt aktuellen Song und aktuellen Sendungstitel aus
+    """
+
+    if read_newpage.last < time.time() - read_newpage.time or not read_newpage.data:
+
+        # Init urllib
+        request = urllib.request.Request("http://nsw-live.de/streaminfo.php")
+        opener = urllib.request.build_opener()
+
+        # Regex
+        regex = re.compile(r'<div[^>]*>\s*<marquee[^>]*>\s*(.+)\s*<\/marquee>\s*<\/div>\s*<div[^>]*>\s*<div[^>]*background:url\(([^>)]*)\)[^>]*>\s*<\/div>\s*<div[^>]*background:url\(([^>)]*)\)[^>]*>\s*<\/div>\s*<div[^>]*>\s*([^><]+).*\s*<\/div>', re.U + re.I)
+
+        # Read data
+        try:
+            data = opener.open(request, None, 2)
+        except socket.timeout:
+            return None
+        except urllib.error.URLError:
+            return read_newpage.data
+
+        # Collect Data
+        rtn = ""
+        while True:
+            line = data.readline()
+            if not line:
+                break
+            try:
+                line = line.decode("iso-8859-1")
+            except UnicodeDecodeError:
+                line = "..."
+            rtn += " " + line
+
+        # Parse
+        for (song, sendung_mod_image, sendung_image, stream_info) in re.findall(regex, rtn):
+            sendung_mod_name = (" ".join((" ".join(sendung_mod_image.split(".")[:-1])).split("_")[1:])).strip().capitalize()
+            read_newpage.data = {'song': song, 'sendung_mod_image': sendung_mod_image, 'sendung_mod_name': sendung_mod_name, 'sendung_image': sendung_image, 'stream_info': stream_info}
+            read_newpage.last = time.time()
+
+    return read_newpage.data
+read_newpage.last = 0
+read_newpage.time = 240
+read_newpage.data = None
+
+
 
 
 def read_nswinfo(config):
 
     info = {}
 
-    data_modding = read_moddinginfo(config.modding_url)
-    for (key, value) in data_modding.items():
-        info[key] = value
+    #data_modding = read_moddinginfo(config.modding_url)
+    #for (key, value) in data_modding.items():
+    #    info[key] = value
 
-    data_sendung = read_sendunginfo(config.sendung_url)
+    #data_sendung = read_sendunginfo(config.sendung_url)
+    #for (key, value) in data_sendung.items():
+    #    info[key] = value
+
+    data_sendung = read_newpage()
     for (key, value) in data_sendung.items():
         info[key] = value
 
@@ -126,8 +176,6 @@ def read_moddinginfo(url):
                 break
             line = line.decode("utf-8")
             rtn += " " + line
-
-        print("%s" % rtn)
 
         # Parse
         (sendung_mod_image, sendung_image, sendung_start_date, sendung_start_time) = rtn.strip().split(" ")
@@ -178,4 +226,4 @@ read_sendunginfo.time = 60
 read_sendunginfo.data = None
 
 if __name__ == "__main__":
-    print("%s" % read_nextsendung())
+    print("%s" % read_newpage())

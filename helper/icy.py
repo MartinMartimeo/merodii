@@ -3,6 +3,8 @@
 """
     Read an icecast stream
 """
+from helper.nsw import read_newpage
+
 __author__ = 'Martin Martimeo <martin@martimeo.de>'
 __date__ = '20.09.12 - 23:03'
 
@@ -139,7 +141,8 @@ def cached_streaminfos(url, mount, song=None):
         if data:
             cached_streaminfos.data = data
 
-        song = {"song": read_nswstreaminfo(song)}
+        #song = {"song": read_nswstreaminfo(song)}
+        song = read_newpage()
         if song["song"]:
             cached_streaminfos.song = song
 
