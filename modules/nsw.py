@@ -10,7 +10,7 @@ import subprocess
 import sys
 
 from helper.icy import cached_streamname
-from helper.nsw import read_sendunginfo, read_nextsendung, read_nswinfo
+from helper.nsw import read_sendunginfo, read_nextsendung, read_nswinfo, read_newpage
 
 def stream(phenny, input):
     """
@@ -43,8 +43,13 @@ def sendung(phenny, input):
     zeigt die aktuelle Sendung auf dem Stream
     """
 
-    info = read_sendunginfo(phenny.config.sendung_url)
-    if info["sendung_thema"]:
+    #info = read_sendunginfo(phenny.config.sendung_url)
+    info = read_newpage()
+    if not sendung:
+        return
+    elif "stream_info" in info.keys():
+        phenny.say(info["stream_info"])
+    elif "sendung_thema" in info.keys():
         phenny.say("%s mit %s seit %s" % (info["sendung_title"], info["sendung_thema"], info["sendung_start"]))
     else:
         phenny.say("%s seit %s" % (info["sendung_title"], info["sendung_start"]))
