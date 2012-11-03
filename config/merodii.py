@@ -44,7 +44,7 @@ fun_uri = {'host': 'localhost', 'user': 'merodii', 'passwd': 'passwd', 'db': 'ir
 fun_table = 'irc_actions'
 
 # The Topics
-topic_noarg = "Aktuell sendet %(sendung_mod_name)s mit %(sendung_title)s"
+topic_noarg = "%(stream_info)s"
 topic_warg = "%(nick)s - %(arg)s"
 topic_playlist = "Aktuell sendet DJ Merodii mit der Anime Playlist"
 topic_next = "Aktuell sendet DJ Merodii mit der Anime Playlist - Nächste Sendung (%(next_sendung_when)s): %(next_sendung_title)s "

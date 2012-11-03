@@ -66,7 +66,7 @@ def fun(phenny, input):
 
     # Query Action
     cursor = get_cursor(phenny.config.fun_uri)
-    cursor.execute('SELECT action_text_%s as text FROM %s WHERE action_ident LIKE ?' % (atype, table), action)
+    cursor.execute('SELECT action_text_%s as text FROM %s WHERE action_ident LIKE ?' % (atype, table), ("%s" % action))
     msg = cursor.fetchone()['text']
 
     phenny.action(msg)
