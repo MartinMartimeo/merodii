@@ -12,6 +12,8 @@
       PRIMARY KEY (`action_ident`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 """
+from random import choice
+import sys
 
 __author__ = 'Martin Martimeo <martin@martimeo.de>'
 __date__ = '03.11.12 - 20:00'
@@ -66,12 +68,22 @@ def fun(phenny, input):
 
     # Query Action
     cursor = get_cursor(phenny.config.fun_uri)
-    cursor.execute('SELECT action_text_%s as text FROM %s WHERE action_ident LIKE ?' % (atype, table), ("%s" % action))
-    msg = cursor.fetchone()['text']
-
-    phenny.action(msg)
+    sql = 'SELECT action_text_%s as text FROM %s WHERE action_ident LIKE ?' % (atype, table)
+    cursor.execute(sql, ("%s" % action, ))
+    msg = cursor.fetchone()
+    if msg:
+        msg = msg['text']
+        for (key, value) in para.items():
+            msg = msg.replace("%%%s" % key, value)
+        while msg.find("[?:") > -1:
+            pos_start = msg.find("[?:")
+            pos_ende = msg.find("]")
+            items = msg[pos_start+3:pos_ende-1].split("|")
+            item = choice(items)
+            msg = msg[:pos_start] + item + msg[pos_ende+1:]
+        phenny.action(msg)
     return
-fun.rule = r'\?(.+)\s+(.*)'
+fun.rule = r'\?(\w+)(?:\s+(.*))?'
 fun.priority = 'low'
 
 
