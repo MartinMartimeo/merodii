@@ -110,41 +110,6 @@ zitat.commands = ['zitat']
 zitat.example = "!zitat Ein Zitat einer berühtem Persöhnlichkeit"
 zitat.priority = 'low'
 
-
-def fun(phenny, input):
-    """
-    Merodii wirft Kekse auf einen User der im Chat Online ist, ist der User nicht vorhanden frisst sie die Kekse selber
-    Merodii plüscht bestimmten User, ist der User nicht vorhanden plüscht sie Oto
-    """
-    nick_to = input.match.group(2)
-    if nick_to:
-        nick_to = nick_to.strip()
-
-        args = nick_to.split()
-        if len(args) > 1:
-            nick_to = args[0].strip()
-
-    action = input.match.group(1).strip()
-    nicks = uchan(input.sender)
-    if isinstance(nicks, list):
-        phenny.write(['NAMES', input.sender])
-        return
-
-    if not nick_to:
-        msg = getattr(phenny.config, "msg_%s_nobody" % action) % input.nick
-    elif nick_to == phenny.nick or nick_to in phenny.config.myself:
-        msg = getattr(phenny.config, "msg_%s_myself" % action)
-    elif nick_to in list(nicks.keys()) and nicks[nick_to]:
-        msg = getattr(phenny.config, "msg_%s_anybody" % action) % nick_to
-    else:
-        msg = getattr(phenny.config, "msg_%s_phenny" % action)
-    phenny.action(msg)
-    return
-fun.commands = ['kekse', 'pluesch']
-fun.example = {'kekse': "!kekse <Nick> bewirft denjenigen mit Keksen.", 'pluesch': "!pluesch <Nick> plüscht denjenigen."}
-fun.priority = 'low'
-
-
 def hilfe(phenny, input):
     """Shows a command's documentation, and possibly an example."""
     name = input.group(2)
@@ -223,85 +188,6 @@ def pl(phenny, input):
 pl.commands = ['pl']
 pl.priority = 'medium'
 
-
-
-# --------------
-"""
-    Remembers the people in channel
-"""
-__author__ = 'MartinMartimeo <martin@martimeo.de>'
-__date__ = '21.09.12 - 20:04'
-
-def uchan(chan):
-    """
-    This is for holding the users in a channel
-    """
-    if chan in list(uchan.data.keys()):
-        return uchan.data[chan]
-    uchan.data[chan] = {}
-    return []
-uchan.data = {}
-
-def on_join(phenny, input):
-    """
-    recognize an user
-    """
-    uchan(input.sender)
-    uchan.data[input.sender][input.nick] = True
-on_join.event = 'JOIN'
-on_join.rule = r'(.*)'
-
-def on_part(phenny, input):
-    """
-    remove an user
-    """
-    uchan(input.sender)
-    uchan.data[input.sender][input.nick] = False
-on_part.event = 'PART'
-on_part.rule = r'(.*)'
-
-def on_quit(phenny, input):
-    """
-    remove an user
-    """
-    uchan(input.sender)
-    uchan.data[input.sender][input.nick] = False
-on_quit.event = 'QUIT'
-on_quit.rule = r'(.*)'
-
-def on_nick(phenny, input):
-    """
-    renames an user
-    """
-    nick_from = input.nick
-    nick_to = input.match.group(0).strip()
-    uchan(input.sender)
-    uchan.data[input.sender][nick_from] = False
-    uchan.data[input.sender][nick_to] = True
-on_nick.event = 'NICK'
-on_nick.rule = r'(.*)'
-
-def on_kick(phenny, input):
-    """
-    gone user
-    """
-    nick = input.args[1]
-    uchan(input.sender)
-    uchan.data[input.sender][nick] = False
-on_kick.event = 'KICK'
-on_kick.rule = r'(.*)'
-
-def on_names(phenny, input):
-    """
-    list user
-    """
-    nicks = input.match.group(0).strip()
-    channel = input.args[2].strip()
-    uchan(channel)
-    for nick in nicks.split():
-        uchan.data[channel][nick.strip("@%+")] = True
-on_names.event = '353'
-on_names.rule = r'(.*)'
 
 if __name__ == '__main__':
     print(__doc__.strip())

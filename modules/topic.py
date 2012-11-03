@@ -15,23 +15,23 @@ from helper.nsw import read_nswinfo
 
 
 def setup(phenny):
-    phenny.last_starttime = None
+    phenny.last_streaminfo = None
     phenny.last_nextwhen = None
     phenny.last_nextname = None
-    phenny.last_startsendung = None
+    phenny.last_modname = None
 
     def monitor(phenny, config):
         time.sleep(25)
         while True:
 
             nsw_info = read_nswinfo(config)
-            if nsw_info["sendung_start"] != phenny.last_startsendung \
-              or nsw_info["sendung_start_time"] != phenny.last_starttime \
-              or ((nsw_info["next_sendung_name"] != phenny.last_nextname or nsw_info["next_sendung_when"] != phenny.last_nextwhen) and nsw_info["sendung_mod_name"] in config.myself):
-                phenny.last_startsendung = nsw_info["sendung_start_time"]
-                phenny.last_starttime = nsw_info["sendung_start"]
+            if nsw_info["sendung_mod_name"] != phenny.last_modname \
+              or nsw_info["stream_info"] != phenny.last_streaminfo \
+              or ((nsw_info["next_sendung_title"] != phenny.last_nextname or nsw_info["next_sendung_when"] != phenny.last_nextwhen) and nsw_info["sendung_mod_name"] in config.myself):
+                phenny.last_modname = nsw_info["sendung_mod_name"]
+                phenny.last_streaminfo = nsw_info["stream_info"]
                 phenny.last_nextwhen = nsw_info["next_sendung_when"]
-                phenny.last_nextname = nsw_info["next_sendung_name"]
+                phenny.last_nextname = nsw_info["next_sendung_title"]
 
                 topic = ""
                 if nsw_info["sendung_mod_name"] in config.myself:

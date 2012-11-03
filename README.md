@@ -33,6 +33,10 @@ Installierung
 Benötigt wird python3.
 Zum starten: python3 phenny -c config/merodii.py
 
+Benötigte Python Module:
+oursql (für fun actions)
+
+
 Implementierung
 =====================
 

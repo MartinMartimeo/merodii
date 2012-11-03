@@ -18,7 +18,7 @@ exclude = ['admin']
 # If you want to enumerate a list of modules rather than disabling
 # some, use "enable = ['example']", which takes precedent over exclude
 # 
-enable = ['startup', 'nsw', 'topic']
+enable = ['startup', 'nsw', 'topic', 'fun']
 
 # Directories to load user modules from
 # e.g. /path/to/my/modules
@@ -30,11 +30,18 @@ external = {
 }
 
 # Channel to be joined
-channels = ['#nsw-anime', '#nsw-anime-test', '#NSW-Intern']
+# channels = ['#nsw-anime', '#nsw-anime-test', '#NSW-Intern']
+channels = ['#nsw-otochan']
 
 # Some configurations
-staff_channel = ['#NSW-Intern']
-main_channel = ['#nsw-anime']
+#staff_channel = ['#NSW-Intern']
+staff_channel = ['#nsw-otochan']
+#main_channel = ['#nsw-anime']
+main_channel = ['#nsw-otochan']
+
+# Fun actions
+fun_uri = {'host': 'localhost', 'user': 'merodii', 'passwd': 'passwd', 'db': 'irc'}
+fun_table = 'irc_actions'
 
 # The Topics
 topic_noarg = "Aktuell sendet %(sendung_mod_name)s mit %(sendung_title)s"
@@ -48,23 +55,15 @@ prefix = "[!]"
 # What URL the stream is located
 stream_url = "http://5.9.88.35:8000/"
 stream_mount = "nsw-anime"
-stream_song = "http://www.nsw-anime.de/modules/mod_shoutcast/info.php?currentSong=1"
-sendung_url = "http://www.nsw-anime.de/pic.php?request=text"
-modding_url = "http://www.nsw-anime.de/pic.php?request=pic"
+stream_song = "http://alt.nsw-anime.de/modules/mod_shoutcast/info.php?currentSong=1"
+sendung_url = "http://alt.nsw-anime.de/pic.php?request=text"
+modding_url = "http://alt.nsw-anime.de/pic.php?request=pic"
 
 # Consider myself
 myself = ["Merodii", "merodii", "Playlist_top"]
 
 # Messages
 msg_fliegen = "CuCu und danke für den Fisch"
-msg_kekse_nobody = "bewirft %s mit Keksen."
-msg_kekse_anybody = "bewirft %s mit Keksen"
-msg_kekse_phenny = "mampft alle Kekse selber auf."
-msg_kekse_myself = "hüpft zu Merodii und gibt ihr einen Keks."
-msg_pluesch_nobody = "plüscht %s."
-msg_pluesch_anybody = "plüscht %s."
-msg_pluesch_phenny = "findet keinen zum plüschen und kuschelt mit Merodii."
-msg_pluesch_myself = "hüpft zu Merodii und kuschelt sie."
 msg_hilfe = "Befehle die ich kenne sind fliegen, kekse, pluesch, hilfe, stream, sendung, next, zitat"
 
 # Authserv
