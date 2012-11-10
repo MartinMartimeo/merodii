@@ -31,7 +31,7 @@ def next(phenny, input):
     """
 
     info = read_nextsendung()
-    phenny.say("Nächste Sendung: %(next_sendung_title)s am %(next_sendung_when)s" % info)
+    phenny.say("Nächste Sendung: %(next_sendung_title)s am %(next_sendung_day)s um %(next_sendung_when)s" % info)
     return
 next.commands = ['next']
 next.example = "!next Zeigt die nächste Sendung an."

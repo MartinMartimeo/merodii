@@ -12,11 +12,12 @@
       PRIMARY KEY (`action_ident`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 """
-from random import choice
-import sys
 
 __author__ = 'Martin Martimeo <martin@martimeo.de>'
 __date__ = '03.11.12 - 20:00'
+
+
+from random import choice
 
 import oursql
 

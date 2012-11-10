@@ -70,7 +70,7 @@ def read_nextsendung():
                 # Also when we have a day < 10 and a when day > 20 it should be a month break
                 if a_time_day < 10 and int(when_day) > 20:
                     continue
-                read_nextsendung.data = {'next_sendung_title': title, 'next_sendung_when': when}
+                read_nextsendung.data = {'next_sendung_title': title, 'next_sendung_day': "%s. %s" % (when_wday, when_month), 'next_sendung_when': when}
                 read_nextsendung.last = time.time()
                 break
 

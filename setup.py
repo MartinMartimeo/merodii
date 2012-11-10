@@ -8,5 +8,6 @@ setup(
     license='',
     author='Martin Martimeo',
     author_email='martin@martimeo.de',
-    description='Ein Bot für #nsw-anime'
+    description='Ein Bot für #nsw-anime',
+    requires=['oursql']
 )
