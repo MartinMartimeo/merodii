@@ -39,9 +39,9 @@ def song(phenny, input):
             return
     phenny.say("Aktuell läuft: %s" % info['song'])
     return
-stream.commands = ['song']
-stream.example = "!song Zeigt den aktuellen Song an."
-stream.priority = 'low'
+song.commands = ['song']
+song.example = "!song Zeigt den aktuellen Song an."
+song.priority = 'low'
 
 
 
