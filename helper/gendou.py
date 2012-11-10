@@ -66,7 +66,8 @@ def get_anime(song):
             song_titles.append(song_title)
 
         # Get Best Match
-        song_titles = difflib.get_close_matches(song, song_titles, 1)
+        song_title = song.rsplit("-", 1)[1]
+        song_titles = difflib.get_close_matches(song_title, song_titles, 1)
         if song_titles:
             song_title = song_titles[0]
             get_anime.data = song_data[song_title]
@@ -80,4 +81,4 @@ get_anime.data = None
 
 
 if __name__ == "__main__":
-    print("%s" % get_anime("Ayane - Arrival of Tears"))
+    print("%s" % get_anime("Bump of chicken - sailing day"))

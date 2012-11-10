@@ -32,7 +32,7 @@ def song(phenny, input):
     """
 
     info = cached_streaminfos(phenny.config.stream_url, phenny.config.stream_mount, phenny.config.stream_song)
-    if song in info.keys():
+    if "song" in info.keys():
         data = get_anime(info["song"])
         if data:
             phenny.say("Aktuell läuft: %(song_artist)s - %(song_title)s (%(song_position)s %(song_anime)s)" % data)
