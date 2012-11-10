@@ -3,13 +3,15 @@
 """
     Open Features für #nsw-anime
 """
+from helper.gendou import get_anime
+
 __author__ = 'Martin Martimeo <martin@martimeo.de>'
 __date__ = '20.09.12 - 23:15'
 
 import subprocess
 import sys
 
-from helper.icy import cached_streamname
+from helper.icy import cached_streamname, cached_streaminfos
 from helper.nsw import read_sendunginfo, read_nextsendung, read_nswinfo, read_newpage
 
 def stream(phenny, input):
@@ -21,8 +23,27 @@ def stream(phenny, input):
     phenny.say("Aktuell sendet: %s" % info)
     return
 stream.commands = ['stream']
-stream.example = "!stream Zeigt aktuellen Song an."
+stream.example = "!stream Zeigt die aktuellen Streaminfos an."
 stream.priority = 'low'
+
+def song(phenny, input):
+    """
+    zeigt das aktuelle Lied auf dem Stream
+    """
+
+    info = cached_streaminfos(phenny.config.stream_url, phenny.config.stream_mount, phenny.config.stream_song)
+    if song in info.keys():
+        data = get_anime(info["song"])
+        if data:
+            phenny.say("Aktuell läuft: %(song_artist)s - %(song_title)s (%(song_position)s %(song_anime)s)" % data)
+            return
+    phenny.say("Aktuell läuft: %s" % info['song'])
+    return
+stream.commands = ['song']
+stream.example = "!song Zeigt den aktuellen Song an."
+stream.priority = 'low'
+
+
 
 
 def next(phenny, input):
