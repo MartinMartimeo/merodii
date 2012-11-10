@@ -66,7 +66,7 @@ def get_anime(song):
             song_titles.append(song_title)
 
         # Get Best Match
-        song_title = song.rsplit("-", 1)[1]
+        song_title = song.rsplit(" - ", 1)[1]
         song_titles = difflib.get_close_matches(song_title, song_titles, 1)
         if song_titles:
             song_title = song_titles[0]
